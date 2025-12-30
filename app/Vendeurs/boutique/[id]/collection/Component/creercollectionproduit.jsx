@@ -7,43 +7,32 @@ export default function AssignationProduits() {
   const [produits, setProduits] = useState([]);
   const [collections, setCollections] = useState([]);
   const [selectedCollectionId, setSelectedCollectionId] = useState('');
-   const { id } = useParams();
-  
+  const { id } = useParams();
 
+  // Charger produits et collections au chargement
   useEffect(() => {
     if (!id) return;
 
-    // Charger les produits de la boutique
+    // Produits
     fetch(`http://localhost:8080/api/produits/boutique/${id}`)
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setProduits(data);
-        else {
-          console.warn("Données produits inattendues:", data);
-          setProduits([]);
-        }
-      })
+      .then((data) => setProduits(Array.isArray(data) ? data : []))
       .catch((err) => {
         console.error("Erreur produits:", err);
         setProduits([]);
       });
 
-    // Charger les collections de la boutique
+    // Collections
     fetch(`http://localhost:8080/api/collections/boutique/${id}`)
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setCollections(data);
-        else {
-          console.warn("Données collections inattendues:", data);
-          setCollections([]);
-        }
-      })
+      .then((data) => setCollections(Array.isArray(data) ? data : []))
       .catch((err) => {
         console.error("Erreur collections:", err);
         setCollections([]);
       });
-  }, [id]); // ✅ Corrigé ici
+  }, [id]);
 
+  // Associer un produit à la collection sélectionnée
   const assignerProduit = async (produitId) => {
     if (!selectedCollectionId) return alert("Veuillez sélectionner une collection");
 
@@ -55,11 +44,15 @@ export default function AssignationProduits() {
 
       if (!res.ok) throw new Error("Échec de l'association");
 
+      // Met à jour localement le produit pour refléter l'association
       setProduits((prev) =>
         prev.map((p) =>
-          p.id === produitId ? { ...p, collection: { id: selectedCollectionId } } : p
+          p.id === produitId
+            ? { ...p, collectionId: Number(selectedCollectionId), collectionNom: collections.find(c => c.id === Number(selectedCollectionId))?.nom }
+            : p
         )
       );
+
       alert("Produit associé avec succès !");
     } catch (err) {
       console.error(err);
@@ -86,24 +79,33 @@ export default function AssignationProduits() {
       </select>
 
       {produits.length > 0 ? (
-        produits.map((p) => (
-          <div key={p.id} className="flex justify-between items-center p-3 border rounded mb-2">
-            <span>
-              {p.nom}{' '}
-              {p.collection ? (
-                <span className="text-green-600 text-sm">(déjà associé)</span>
-              ) : null}
-            </span>
-            {!p.collection && (
-              <button
-                onClick={() => assignerProduit(p.id)}
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-              >
-                Associer
-              </button>
-            )}
-          </div>
-        ))
+        produits.map((p) => {
+          const estAssocie = selectedCollectionId && Number(p.collectionId) === Number(selectedCollectionId);
+
+          return (
+            <div
+              key={p.id}
+              className="flex justify-between items-center p-3 border rounded mb-2"
+            >
+              <span className="font-medium">{p.nom}</span>
+
+              {selectedCollectionId ? (
+                estAssocie ? (
+                  <span className="text-green-600 font-semibold">✅ Associé</span>
+                ) : (
+                  <button
+                    onClick={() => assignerProduit(p.id)}
+                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                  >
+                    Associer ❌
+                  </button>
+                )
+              ) : (
+                <span className="text-gray-400 text-sm">Choisir une collection</span>
+              )}
+            </div>
+          );
+        })
       ) : (
         <p className="text-gray-500 italic">Aucun produit trouvé.</p>
       )}

@@ -3,6 +3,8 @@ import React from "react";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/ClientHeader";
 import Footer from "./components/Footer";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 

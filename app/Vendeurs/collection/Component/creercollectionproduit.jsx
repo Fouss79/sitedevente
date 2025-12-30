@@ -85,27 +85,49 @@ export default function AssignationProduits() {
       </select>
 
       {produits.length > 0 ? (
-        produits.map((p) => (
-          <div key={p.id} className="flex justify-between items-center p-3 border rounded mb-2">
-            <span>
-              {p.nom}{' '}
-              {p.collection ? (
-                <span className="text-green-600 text-sm">(déjà associé)</span>
-              ) : null}
+  produits.map((p) => {
+    const isAssociatedToSelected =
+      p.collection && p.collection.id == selectedCollectionId;
+
+    const isAssociatedToOther =
+      p.collection && p.collection.id != selectedCollectionId;
+
+    return (
+      <div
+        key={p.id}
+        className="flex justify-between items-center p-3 border rounded mb-2"
+      >
+        <span className="flex flex-col">
+          <span className="font-medium">{p.nom}</span>
+
+          {selectedCollectionId && isAssociatedToSelected && (
+            <span className="text-green-600 text-sm">
+              ✅ Déjà associé à cette collection
             </span>
-            {!p.collection && (
-              <button
-                onClick={() => assignerProduit(p.id)}
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-              >
-                Associer
-              </button>
-            )}
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500 italic">Aucun produit trouvé.</p>
-      )}
+          )}
+
+          {selectedCollectionId && isAssociatedToOther && (
+            <span className="text-orange-500 text-sm">
+              ⚠️ Associé à une autre collection
+            </span>
+          )}
+        </span>
+
+        {!p.collection && selectedCollectionId && (
+          <button
+            onClick={() => assignerProduit(p.id)}
+            className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+          >
+            Associer
+          </button>
+        )}
+      </div>
+    );
+  })
+) : (
+  <p className="text-gray-500 italic">Aucun produit trouvé.</p>
+)}
+
     </div>
   );
 }

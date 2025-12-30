@@ -1,47 +1,35 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React from "react";
 import Slider from "react-slick";
-import axios from "axios";
+
+const images = [
+  { id: 1, url: "/bann.jpeg", description: "Promotion 1" },
+  { id: 2, url: "/banne.jpeg", description: "Promotion 2" },
+  { id: 3, url: "/banner.jpeg", description: "Promotion 3" },
+];
 
 const Carousel = () => {
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:8080/api/carousel/list")
-      .then(response => setImages(response.data))
-      .catch(error => console.error("Erreur lors du chargement des images", error));
-     
-  }, []);
-
-  useEffect(()=>{
-    console.log(images)
-  })
-    
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 8000,
-    arrows: false
+    arrows: false,
   };
 
   return (
-    <div className="w-full h-[400px] overflow-hidden">
+    <div className="w-full h-[220px] md:h-[300px] overflow-hidden">
       <Slider {...settings}>
         {images.map((img) => (
-          <div key={img.id} className="relative w-full h-[400px] md:h-[500px]">
+          <div key={img.id} className="h-[220px] md:h-[300px]">
             <img
               src={img.url}
               alt={img.description}
-              className="w-full h-full object-cover rounded-none"
+              className="w-full h-full object-cover"
             />
-            {/* Optionnel : overlay texte */}
-            {/* <div className="absolute bottom-4 left-4 text-white text-xl font-bold bg-black bg-opacity-50 px-4 py-2 rounded">
-              {img.description}
-            </div> */}
           </div>
         ))}
       </Slider>
