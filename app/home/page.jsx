@@ -4,12 +4,15 @@ import Carousel from '../components/Carousel'
 import CollectionAccueil from '../components/CollectionAcceuil'
 import Dropdown from '../components/dropdown'
 import AccueilCollections from '../components/CollectionAccueil'
+import BoutiqueSlider from '../components/boutiqueSlider'
 
 const page = () => {
   return (
      <div className="flex flex-col min-h-screen bg-[#3498db]">
       <Carousel/>
+       <BoutiqueSlider/>
       <Dropdown/>
+     
      <ListProduits/>
      <CollectionAccueil/>
     <AccueilCollections/>
