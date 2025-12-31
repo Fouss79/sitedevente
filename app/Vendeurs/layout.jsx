@@ -6,7 +6,7 @@ import HeaderClient from "./components/HeaderClient";
 import { usePathname } from "next/navigation";
 
 const Layout = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
   const sidebarRef = useRef(null);
 
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
 
   // Fermer le sidebar au changement de page
   useEffect(() => {
-    setIsOpen(false);
+    setIsOpen(true);
   }, [pathname]);
 
   // Fermer le sidebar au clic extérieur
@@ -33,7 +33,8 @@ const Layout = ({ children }) => {
   return (
     <div className="h-screen flex flex-col">
       {/* HEADER FIXE */}
-      <HeaderClient onMenuClick={toggleSidebar} />
+      <HeaderClient toggleSidebar={toggleSidebar} />
+
 
       {/* ZONE CENTRALE */}
       <div className="flex flex-1 overflow-hidden">

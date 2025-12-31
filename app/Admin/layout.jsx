@@ -7,6 +7,8 @@ import Header from './Component/AdminHeader';
 
 const Layout = ({ children }) => {
 
+
+  
   
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -42,7 +44,7 @@ const handleClickOutside = (event) => {
 
   return (<div className="h-screen flex flex-col">
       {/* HEADER FIXE */}
-      <Header/> 
+      <Header toggleSidebar={toggleSidebar}/> 
 
       {/* ZONE CENTRALE */}
       <div className="flex flex-1 overflow-hidden">

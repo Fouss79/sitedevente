@@ -15,6 +15,8 @@ export default function AccueilCollections() {
 
   if (!collections.length) return null;
 
+
+
   const backgrounds = [
   "bg-[#1abc9c]", // turquoise clair
   "bg-[#e74c3c]", // rouge vif
@@ -23,11 +25,11 @@ export default function AccueilCollections() {
 
 
   return (
-    <div className="flex flex-col gap-12 px-4 py-8">
+    <div className="flex flex-col gap-12 ">
       {collections.map((collection, index) => (
         <section key={collection.id} className={`text-white rounded-lg overflow-hidden ${backgrounds[index]}`}>
           
-          <div className="border-b border-gray-500 pb-6">
+          <div className="border-b border-gray-500 pb-6 px-2 py-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
               
               {/* Image */}

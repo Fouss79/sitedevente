@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useAuth } from "../../context/AuthContext";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoMdMenu } from "react-icons/io";
 
 
-export default function HeaderClient() {
+export default function HeaderClient({toggleSidebar}) {
   const { user, isAuthenticated, logout, panier } = useAuth();
   const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
@@ -24,7 +25,12 @@ export default function HeaderClient() {
       <Link href="/home" className="text-xl font-bold">
         🛍️ MaBoutique
       </Link>
-
+       
+       <div className='flex justify-center items-center md:hidden'>
+               <button onClick={toggleSidebar}>
+                 <IoMdMenu className='text-2xl' />
+               </button>
+             </div>
       <nav className="flex gap-4 items-center">
         <Link href="/home">Accueil</Link>
         <Link href="/commande">Commandes</Link>
