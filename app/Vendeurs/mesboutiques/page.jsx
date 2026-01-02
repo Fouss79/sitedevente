@@ -12,17 +12,23 @@ const BoutiquesParUtilisateur = () => {
   const [boutiques, setBoutiques] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // URL de base depuis .env
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     if (!vendeurId) return;
 
     axios
-      .get(`http://localhost:8080/api/boutique/utilisateur/${vendeurId}`)
+      .get(`${API_URL}/api/boutique/utilisateur/${vendeurId}`)
       .then((res) => {
         setBoutiques(res.data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
-  }, [vendeurId]);
+      .catch((err) => {
+        console.error("Erreur chargement boutiques:", err);
+        setLoading(false);
+      });
+  }, [vendeurId, API_URL]);
 
   if (!user) return <p className="text-center text-red-500">Vous devez être connecté.</p>;
   if (loading) return <p>Chargement...</p>;

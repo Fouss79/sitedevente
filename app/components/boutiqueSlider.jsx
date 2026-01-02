@@ -9,8 +9,11 @@ const BoutiqueSlider = () => {
   const sliderRef = useRef(null);
   const router = useRouter();
 
+   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/boutique')
+    axios.get(`${API_URL}/api/boutique`)
+
       .then(res => setBoutiques(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -55,7 +58,7 @@ const BoutiqueSlider = () => {
                          hover:shadow-2xl transition-all"
             >
               <img
-                src={`http://localhost:8080/${btq.image}`}
+                src={`${API_URL}/${btq.image}`}
                 alt={btq.nom}
                 className="w-full h-40 object-cover rounded-t-2xl"
               />

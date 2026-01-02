@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -7,32 +7,30 @@ import { useAuth } from "../../context/AuthContext";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdDashboard, MdCollections } from "react-icons/md";
 import { useParams } from "next/navigation";
+
 const Sidebar = () => {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const [utilisateur, setUtilisateur] = useState(null);
-   const {id}= useParams();
+  const { id } = useParams();
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     if (!user?.id) return;
 
     const fetchUtilisateur = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/api/utilisateur/${user.id}`);
+        const res = await fetch(`${API_URL}/api/utilisateur/${user.id}`);
         const data = await res.json();
         setUtilisateur(data);
-
-       
-                
       } catch (error) {
         console.error("Erreur lors du chargement du profil:", error);
       }
     };
 
     fetchUtilisateur();
-  }, [user?.id]);
-     
-   
-
+  }, [user?.id, API_URL]);
 
   const menuList = [
     { nom: "Dashboard", link: `/Vendeurs`, icon: <MdDashboard /> },
@@ -41,17 +39,17 @@ const Sidebar = () => {
     { nom: "Créer une boutique", link: "/Vendeurs/boutique", icon: <FaShoppingCart /> },
     { nom: "Ajouter un produit", link: "/Vendeurs/produits/ajouterproduit", icon: <FaShoppingCart /> },
     { nom: "Commandes reçues", link: "/Vendeurs/commandes", icon: <MdCollections /> },
-     { nom: "Collection", link: "/Vendeurs/collection", icon: <MdDashboard /> },
+    { nom: "Collection", link: "/Vendeurs/collection", icon: <MdDashboard /> },
     { nom: "Gestion de stock", link: "/Vendeurs/stock", icon: <FaShoppingCart /> },
   ];
 
   return (
-    <aside className="flex flex-col items-center bg-yellow-700 px-4 mt-4  w-[250px] h-screen">
+    <aside className="flex flex-col items-center bg-yellow-700 px-4 mt-4 w-[250px] h-screen">
       {/* Photo + nom utilisateur */}
       <div className="text-center mb-4 mt-2">
         {utilisateur?.image ? (
           <img
-            src={`http://localhost:8080/${utilisateur.image}`}
+            src={`${API_URL}/${utilisateur.image}`}
             alt="Photo de profil"
             className="w-24 h-24 rounded-full object-cover border-2 border-white mx-auto"
           />
@@ -66,20 +64,20 @@ const Sidebar = () => {
       </div>
 
       {/* Menu navigation */}
-      <ul className="w-full space-y-2 ">
+      <ul className="w-full space-y-2">
         {menuList.map((menu, index) => (
           <SidebarItem key={index} menu={menu} currentPath={pathname} />
         ))}
       </ul>
 
       {/* Bouton de déconnexion (optionnel) */}
-      {/* 
+      {/*
       <button
         onClick={logout}
         className="mt-auto w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded font-semibold"
       >
         Déconnexion
-      </button> 
+      </button>
       */}
     </aside>
   );

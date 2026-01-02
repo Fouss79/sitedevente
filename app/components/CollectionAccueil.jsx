@@ -5,37 +5,45 @@ import ProductItem from './ProductItems copy';
 
 export default function AccueilCollections() {
   const [collections, setCollections] = useState([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/collections/accueil')
+    if (!API_URL) return;
+
+    fetch(`${API_URL}/api/collections/accueil`)
       .then(res => res.json())
       .then(data => setCollections(data))
-      .catch(err => console.error('Erreur chargement collections accueil :', err));
-  }, []);
+      .catch(err =>
+        console.error('Erreur chargement collections accueil :', err)
+      );
+  }, [API_URL]);
 
   if (!collections.length) return null;
 
-
-
   const backgrounds = [
-  "bg-[#1abc9c]", // turquoise clair
-  "bg-[#e74c3c]", // rouge vif
-  "bg-[#f39c12]"  // orange chaud
-];
-
+    "bg-[#1abc9c]", // turquoise
+    "bg-[#e74c3c]", // rouge
+    "bg-[#f39c12]", // orange
+    "bg-[#8e44ad]", // violet (bonus si + de collections)
+  ];
 
   return (
-    <div className="flex flex-col gap-12 ">
+    <div className="flex flex-col gap-12">
       {collections.map((collection, index) => (
-        <section key={collection.id} className={`text-white rounded-lg overflow-hidden ${backgrounds[index]}`}>
-          
+        <section
+          key={collection.id}
+          className={`text-white rounded-lg overflow-hidden ${
+            backgrounds[index % backgrounds.length]
+          }`}
+        >
+          {/* Header */}
           <div className="border-b border-gray-500 pb-6 px-2 py-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
               
               {/* Image */}
               {collection.image && (
                 <img
-                  src={`http://localhost:8080/${collection.image}`}
+                  src={`${API_URL}/${collection.image}`}
                   alt={collection.nom}
                   className="w-full md:w-1/3 object-cover rounded"
                 />
@@ -43,20 +51,25 @@ export default function AccueilCollections() {
 
               {/* Description */}
               <div className="md:w-2/3 mt-8 md:mt-28 p-6">
-                <h2 className="text-3xl font-bold mb-2">{collection.nom}</h2>
-                <p className="text-gray-200 mb-4">{collection.description}</p>
-                <h1 className="text-5xl font-bold">Bienvenue sur notre boutique</h1>
+                <h2 className="text-3xl font-bold mb-2">
+                  {collection.nom}
+                </h2>
+                <p className="text-gray-200 mb-4">
+                  {collection.description}
+                </p>
+                <h1 className="text-4xl sm:text-5xl font-bold">
+                  Bienvenue sur notre boutique
+                </h1>
               </div>
             </div>
           </div>
 
-          {/* Grille de produits */}
+          {/* Produits */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-6 bg-white/10">
-            {collection.produits?.slice(0, 4).map(produit => (
+            {collection.produits?.slice(0, 4).map((produit) => (
               <ProductItem key={produit.id} product={produit} />
             ))}
           </div>
-
         </section>
       ))}
     </div>

@@ -1,8 +1,9 @@
+'use client';
+
 import React, { useState } from "react";
-import { useParams } from "next/navigation";
 import { Heart, ShoppingCart } from 'lucide-react';
 import Link from "next/link";
-import Etoiles from "./Etoiles"; // ⭐ Ajout de l'import
+import Etoiles from "./Etoiles";
 
 const ProductItem = ({ product, handleClick }) => {
   const [isFavori, setIsFavori] = useState(false);
@@ -10,6 +11,8 @@ const ProductItem = ({ product, handleClick }) => {
   const toggleFavori = () => {
     setIsFavori(!isFavori);
   };
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   return (
     <div className="relative max-w-sm p-4 shadow-lg rounded-lg bg-white">
@@ -25,7 +28,7 @@ const ProductItem = ({ product, handleClick }) => {
         <Link href={`/home/produit/${product.id}`}>
           <div className="cursor-pointer">
             <img
-              src={`http://localhost:8080/${product.image}`}
+              src={`${API_URL}/${product.image}`}
               alt={product.nom}
               className="mx-auto rounded object-cover h-60 w-36 mt-6 transition-transform duration-300 hover:scale-105"
             />
@@ -34,7 +37,7 @@ const ProductItem = ({ product, handleClick }) => {
             {/* ⭐️ Les étoiles */}
             <Etoiles note={product.moyenne || 0} />
 
-            <p>{product.prix.toFixed(2)} FCFA </p>
+            <p>{product.prix.toFixed(2)} FCFA</p>
           </div>
         </Link>
 

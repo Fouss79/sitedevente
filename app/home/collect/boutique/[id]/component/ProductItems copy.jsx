@@ -25,7 +25,7 @@ const ProductItem = ({ product }) => {
         <Heart size={24} className={isFavori ? "text-red-500" : "text-gray-400"} />
       </div>
 
-      <Link href={`/home/collect/boutique/${product.boutique.id}`}>
+      <Link href={`/home/produit/${product.id}`}>
         <div className="cursor-pointer">
           <img
            src={`${API_URL}/${product.image}`}

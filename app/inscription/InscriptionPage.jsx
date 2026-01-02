@@ -22,7 +22,7 @@ export default function InscriptionPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:8080/api/utilisateur", {
+    const res = await fetch("https://anyone-combination-basketball-hardwood.trycloudflare.com/api/utilisateur", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

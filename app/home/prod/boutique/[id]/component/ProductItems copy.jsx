@@ -5,7 +5,7 @@ import Link from "next/link";
 import Etoiles from "./Etoiles"; // ✅ Import ajouté
 
 const ProductItem = ({ product }) => {
-  const { id } = useParams();
+  
   const [isFavori, setIsFavori] = useState(false);
 
   // ✅ API URL depuis .env.local
@@ -25,7 +25,7 @@ const ProductItem = ({ product }) => {
         <Heart size={24} className={isFavori ? "text-red-500" : "text-gray-400"} />
       </div>
 
-      <Link href={`/home/collect/boutique/${product.boutique.id}`}>
+      <Link href={`/home/boutique/${product.boutiqueI}`}>
         <div className="cursor-pointer">
           <img
            src={`${API_URL}/${product.image}`}
@@ -40,7 +40,7 @@ const ProductItem = ({ product }) => {
           <p className="text-gray-700">
             Prix : <span className="text-[#15878f]">{product.prix.toFixed(2)} FCFA</span>
           </p>
-          <p className="text-sm text-gray-500">Boutique : {product.boutique.nom}</p>
+          <p className="text-sm text-gray-500">Boutique : {product.boutiqueNom}</p>
         </div>
       </Link>
 
