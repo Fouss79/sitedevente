@@ -21,9 +21,9 @@ export default function AccueilCollections() {
   if (!collections.length) return null;
 
   const backgrounds = [
-    "bg-[#1abc9c]", // turquoise
-    "bg-[#e74c3c]",
-    "bg-[#8e44ad]", // rouge
+    "bg-[#751E27]", // turquoise
+    "bg-[#0A2330]",
+    "bg-[#567F96]", // rouge
     "bg-[#f39c12]", // orange
      // violet (bonus si + de collections)
   ];
