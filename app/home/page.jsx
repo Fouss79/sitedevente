@@ -5,15 +5,28 @@ import CollectionAccueil from '../components/CollectionAcceuil'
 import Dropdown from '../components/dropdown'
 import AccueilCollections from '../components/CollectionAccueil'
 import BoutiqueSlider from '../components/boutiqueSlider'
+import Link from "next/link";
 
 const page = () => {
   return (
-     <div className="flex flex-col min-h-screen bg-[#3498db]">
+     <div className="flex flex-col min-h-screen ">
       <Carousel/>
-       <BoutiqueSlider/>
-      <Dropdown/>
      
-     <ListProduits/>
+          <div className='mt-20'>     {/* 🔹 Bouton NOS ARTICLES */}
+    
+      <Link href={`/home/produit`}>
+        <button className="
+          px-5 py-2 rounded-xl
+          bg-black/30 text-white font-semibold
+          border border-white/30
+          backdrop-blur
+          transition-all duration-300
+          hover:bg-black/50 hover:scale-105
+        ">
+          LES ARTICLES
+        </button>
+      </Link>
+    </div>
      <CollectionAccueil/>
     <AccueilCollections/>
     

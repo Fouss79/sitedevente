@@ -22,13 +22,14 @@ export default function AccueilCollections() {
 
   const backgrounds = [
     "bg-[#1abc9c]", // turquoise
-    "bg-[#e74c3c]", // rouge
+    "bg-[#e74c3c]",
+    "bg-[#8e44ad]", // rouge
     "bg-[#f39c12]", // orange
-    "bg-[#8e44ad]", // violet (bonus si + de collections)
+     // violet (bonus si + de collections)
   ];
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-4 mt-4 ">
       {collections.map((collection, index) => (
         <section
           key={collection.id}
@@ -37,7 +38,7 @@ export default function AccueilCollections() {
           }`}
         >
           {/* Header */}
-          <div className="border-b border-gray-500 pb-6 px-2 py-8">
+          <div className="border-b border-gray-500 pb-6 px-2 py-4">
             <div className="flex flex-col md:flex-row items-start gap-6">
               
               {/* Image */}

@@ -72,7 +72,7 @@ const ProductItem = ({ product }) => {
           mt-3
           w-full
           text-center
-          bg-[#3498db]
+          bg-[#15878f]
           text-white
           py-1.5
           rounded-md

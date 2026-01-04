@@ -1,9 +1,13 @@
 "use client";
+
 import React, { useState, useEffect, useMemo } from "react";
 import api from "../lib/api";
-import ProductItem from "./ProductItems copy 2";
+import ProductItem from "./ProductItems copy";
+import { useParams } from "next/navigation";
 
 const ListProduits = ({ refreshKey }) => {
+  const { id } = useParams(); // 👈 ID boutique depuis l’URL
+
   const [produits, setProduits] = useState([]);
   const [categories, setCategories] = useState([]);
   const [boutiques, setBoutiques] = useState([]);
@@ -14,15 +18,29 @@ const ListProduits = ({ refreshKey }) => {
   const [selectedCategorie, setSelectedCategorie] = useState("all");
   const [selectedBoutique, setSelectedBoutique] = useState("all");
 
-  // === Fetch produits ===
+  // === Fetch produits par boutique ===
   const fetchProduits = async () => {
+    if (!id) return;
+
     setLoading(true);
     setError(null);
+
     try {
-      const res = await api.get("/api/produits");
-      setProduits(res.data);
-    } catch {
+      const res = await api.get(`/api/produits/boutique/${id}`);
+
+      // ✅ Sécurisation ABSOLUE
+      if (Array.isArray(res.data)) {
+        setProduits(res.data);
+      } else if (Array.isArray(res.data.produits)) {
+        setProduits(res.data.produits);
+      } else {
+        setProduits([]);
+      }
+
+    } catch (err) {
+      console.error(err);
       setError("Erreur chargement produits");
+      setProduits([]);
     } finally {
       setLoading(false);
     }
@@ -32,7 +50,7 @@ const ListProduits = ({ refreshKey }) => {
   const fetchCategories = async () => {
     try {
       const res = await api.get("/api/categorie");
-      setCategories(res.data);
+      setCategories(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
     }
@@ -42,7 +60,7 @@ const ListProduits = ({ refreshKey }) => {
   const fetchBoutiques = async () => {
     try {
       const res = await api.get("/api/boutique");
-      setBoutiques(res.data);
+      setBoutiques(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
     }
@@ -52,10 +70,12 @@ const ListProduits = ({ refreshKey }) => {
     fetchProduits();
     fetchCategories();
     fetchBoutiques();
-  }, [refreshKey]);
+  }, [id, refreshKey]); // ✅ id ajouté
 
-  // === FILTRES + TRI ===
+  // === FILTRES + TRI (SÉCURISÉ) ===
   const produitsFiltres = useMemo(() => {
+    if (!Array.isArray(produits)) return [];
+
     let result = [...produits];
 
     // 🔹 Filtre boutique
@@ -100,16 +120,14 @@ const ListProduits = ({ refreshKey }) => {
   return (
     <div className="rounded-xl p-5 w-full">
       {loading ? (
-        <p>Chargement...</p>
+        <p className="text-white">Chargement...</p>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
         <>
           {/* Header + Filtres */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-6 items-start lg:items-center lg:justify-between">
-            <h2 className="text-2xl text-white font-bold">
-              Produits en vedette
-            </h2>
+          <div className="flex flex-col lg:flex-row  mb-6 items-start lg:items-center lg:justify-between">
+           
 
             <div className="flex flex-wrap gap-3">
               {/* Boutique */}
@@ -155,8 +173,8 @@ const ListProduits = ({ refreshKey }) => {
           </div>
 
           {/* Produits */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-6">
-            {produitsFiltres.slice(0, 15).map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-5 gap-4">
+            {produitsFiltres.slice(0, 9).map((product) => (
               <ProductItem key={product.id} product={product} />
             ))}
           </div>

@@ -20,7 +20,7 @@ export default function ClientLayout({ children }) {
         
 
         {/* Contenu principal qui prend l'espace restant */}
-        <div className="p-8 mt-8">
+        <div className="">
           {children}
         </div>
 

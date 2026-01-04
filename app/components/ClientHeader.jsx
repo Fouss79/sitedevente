@@ -40,7 +40,7 @@ export default function Header() {
   }, 0);
 
   return (
-    <header className="bg-white shadow-md p-4 flex justify-between items-center fixed top-0 left-0 w-full z-30">
+    <header className="bg-white shadow-md p-4 flex justify-between items-center  top-0 left-0 w-full z-30">
       <Link href="/home" className="text-xl font-bold text-[#036c94]">
         🛍️ MaBoutique
       </Link>

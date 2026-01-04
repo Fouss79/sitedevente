@@ -28,6 +28,7 @@ export default function CollectionAccueil() {
 
   return (
     <div className="w-full px-2 sm:px-4 py-6 bg-[#15878f] text-white">
+    
       <div className="border-b border-gray-500 pb-4">
         <div className="flex flex-col md:flex-row items-start gap-6">
           {/* Image de la collection */}

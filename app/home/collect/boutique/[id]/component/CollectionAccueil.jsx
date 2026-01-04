@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from "next/link";
-import ProductItem from './ProductItems copy';
+import ProductItem from '../../../../../components/ProductItems copy';
 
 
 export default function AccueilCollections() {
@@ -32,7 +32,7 @@ export default function AccueilCollections() {
   ];
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col gap-4">
       <div className='mt-20'>     {/* 🔹 Bouton NOS ARTICLES */}
     {id && (
       <Link href={`/home/prod/boutique/${id}`}>

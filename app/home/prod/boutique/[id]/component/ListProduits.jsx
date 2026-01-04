@@ -126,10 +126,8 @@ const ListProduits = ({ refreshKey }) => {
       ) : (
         <>
           {/* Header + Filtres */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-6 items-start lg:items-center lg:justify-between">
-            <h2 className="text-2xl text-white font-bold">
-              Produits en vedette
-            </h2>
+          <div className="flex flex-col lg:flex-row  mb-6 items-start lg:items-center lg:justify-between">
+           
 
             <div className="flex flex-wrap gap-3">
               {/* Boutique */}
@@ -175,7 +173,7 @@ const ListProduits = ({ refreshKey }) => {
           </div>
 
           {/* Produits */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
             {produitsFiltres.slice(0, 9).map((product) => (
               <ProductItem key={product.id} product={product} />
             ))}

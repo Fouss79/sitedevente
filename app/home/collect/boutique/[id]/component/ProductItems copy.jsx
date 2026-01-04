@@ -30,7 +30,7 @@ const ProductItem = ({ product }) => {
           <img
            src={`${API_URL}/${product.image}`}
             alt={product.nom}
-            className="w-full h-56 object-cover rounded transition-transform duration-300 hover:scale-105"
+            className="w-full h-100 object-cover rounded transition-transform duration-300 hover:scale-105"
           />
           <h3 className="font-semibold text-lg mt-2">{product.nom}</h3>
 
