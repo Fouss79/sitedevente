@@ -251,7 +251,7 @@ export default function ProduitDetail() {
           }}
           navigation
           pagination={{ clickable: true }}
-          className="py-4"
+          className="py-2"
         >
           {produitsTries.slice(0, 8).map((product) => (
             <SwiperSlide key={product.id}>

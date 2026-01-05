@@ -3,9 +3,9 @@ import React from "react";
 import Slider from "react-slick";
 
 const images = [
-  { id: 1, url: "/bann.jpeg", description: "Promotion 1" },
+  { id: 1, url: "/maboutiqu.png", description: "Promotion 1" },
   { id: 2, url: "/banne.jpeg", description: "Promotion 2" },
-  { id: 3, url: "/banner.jpeg", description: "Promotion 3" },
+  { id: 3, url: "/maboutique.png", description: "Promotion 3" },
 ];
 
 const Carousel = () => {
@@ -24,7 +24,7 @@ const Carousel = () => {
     <div className="w-full h-[220px] md:h-[300px] overflow-hidden">
       <Slider {...settings}>
         {images.map((img) => (
-          <div key={img.id} className="h-[220px] md:h-[300px]">
+          <div key={img.id} className="h-[280px] md:h-[300px]">
             <img
               src={img.url}
               alt={img.description}

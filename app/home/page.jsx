@@ -11,12 +11,12 @@ const page = () => {
   return (
      <div className="flex flex-col min-h-screen ">
       <Carousel/>
-     
-          <div className='mt-20'>     {/* 🔹 Bouton NOS ARTICLES */}
+     <div className='flex justify-between'>
+        <div className='mt-20'>     {/* 🔹 Bouton NOS ARTICLES */}
     
       <Link href={`/home/produit`}>
         <button className="
-          px-5 py-2 rounded-xl
+          px-5 py-2 mt-6 rounded-xl
           bg-black/30 text-white font-semibold
           border border-white/30
           backdrop-blur
@@ -26,7 +26,11 @@ const page = () => {
           LES ARTICLES
         </button>
       </Link>
+      
     </div>
+    <h1 className='mt-8 px-16 font-bold'>MABOUTIQUE UN LIEU D'ACHAT ET DE VENTE RAPIDE ET EFFICACE</h1>
+     </div>
+        
      <CollectionAccueil/>
     <AccueilCollections/>
     

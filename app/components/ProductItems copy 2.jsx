@@ -38,7 +38,7 @@ const ProductItem = ({ product }) => {
         />
       </div>
 
-      <Link href={`/home/boutique/${product.boutiqueI}`}>
+      <Link href={`/home/collect/boutique/${product.boutiqueId}`}>
         <div className="cursor-pointer">
           <img
             src={`${API_URL}/${product.image}`}
